@@ -1,6 +1,7 @@
 package com.app.edu.mytresenrayaapp;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -53,6 +54,8 @@ public class GameActivity extends AppCompatActivity {
         bt9 = (Button) findViewById(R.id.bt9);
         btReStart = (Button) findViewById(R.id.btReStart);
 
+        final Handler handler = new Handler();
+
         tablero = new ArrayList<Button>() {{add(bt1); add(bt2); add(bt3);
             add(bt4); add(bt5); add(bt6);add(bt7); add(bt8); add(bt9);}};
 
@@ -78,9 +81,14 @@ public class GameActivity extends AppCompatActivity {
                                 endGame = true;
                             };
                         }
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA
-                        SystemClock.sleep(400);
-                        signo = moveIA(signo);
+                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 100ms
+                                signo = moveIA(signo);
+                            }
+                        }, 1000);
 
 
                     } else {
@@ -111,9 +119,14 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA
-                        SystemClock.sleep(400);
-                        signo = moveIA(signo);
+                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 100ms
+                                signo = moveIA(signo);
+                            }
+                        }, 1000);
 
 
                     } else {
@@ -144,9 +157,14 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA
-                        SystemClock.sleep(400);
-                        signo = moveIA(signo);
+                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 100ms
+                                signo = moveIA(signo);
+                            }
+                        }, 1000);
 
 
                     } else {
@@ -177,9 +195,14 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA
-                        SystemClock.sleep(400);
-                        signo = moveIA(signo);
+                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 1000ms
+                                signo = moveIA(signo);
+                            }
+                        }, 1000);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -209,9 +232,14 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA
-                        SystemClock.sleep(400);
-                        signo = moveIA(signo);
+                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 1000ms
+                                signo = moveIA(signo);
+                            }
+                        }, 1000);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -241,9 +269,14 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA
-                        SystemClock.sleep(400);
-                        signo = moveIA(signo);
+                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 1000ms
+                                signo = moveIA(signo);
+                            }
+                        }, 1000);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -273,9 +306,14 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA
-                        SystemClock.sleep(400);
-                        signo = moveIA(signo);
+                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 1000ms
+                                signo = moveIA(signo);
+                            }
+                        }, 1000);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -305,9 +343,14 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA
-                        SystemClock.sleep(400);
-                        signo = moveIA(signo);
+                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 1000ms
+                                signo = moveIA(signo);
+                            }
+                        }, 1000);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -337,9 +380,14 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA
-                        SystemClock.sleep(400);
-                        signo = moveIA(signo);
+                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Do something after 1000ms
+                                signo = moveIA(signo);
+                            }
+                        }, 1000);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -503,6 +551,7 @@ public class GameActivity extends AppCompatActivity {
     private String moveIA(String signo){
         System.out.println("ACTIVITY JUGAR-IA: Moviendo la IA con signo " +signo);
         String signo_persona;
+        Boolean movimiento=false;
 
         if (signo.equals("X")){
             signo_persona = "O";
@@ -512,32 +561,51 @@ public class GameActivity extends AppCompatActivity {
         for (int j=0; j<tablero.size();j++){
             if (tablero.get(j).getText().toString().equals("-")){
                 tablero.get(j).setText(signo);
-                if (comprobarGanador(signo).equals(signo)){
+                if (comprobarGanador(signo).equals(signo)&&!movimiento){
                     tvMensajes.setText("Lo siento has perdido");
                     endGame=true;
+                    movimiento=true;
                 } else {tablero.get(j).setText("-");};
             }
         }
         //Revisaremos si con algún movimiento en el tablero el jugador puede ganar
-        if(!endGame){
+        if(!movimiento){
             for (int j=0; j<tablero.size();j++){
                 if (tablero.get(j).getText().toString().equals("-")){
                     tablero.get(j).setText(signo_persona);
-                    if (comprobarGanador(signo_persona).equals(signo_persona)){
+                    if (comprobarGanador(signo_persona).equals(signo_persona)&&!movimiento){
                         tablero.get(j).setText(signo);
+                        movimiento=true;
                         tvMensajes.setText("Lo siento te he cortado");
                     } else {tablero.get(j).setText("-");};
                 }
             }
         }
         //Si está libre nos pondremos en la casilla central o en una esquina
-        if(!endGame){
+        if(!movimiento){
             if (tablero.get(4).getText().toString().equals("-")){
                 tablero.get(4).setText(signo);
-            } else if (tablero.get(0).getText().toString().equals("-")){
-                tablero.get(0).setText(signo);
-            } else if (tablero.get(6).getText().toString().equals("-")){
-                tablero.get(6).setText(signo);
+                System.out.println("ACTIVITY IA: Coloco en el centro no puedo ganar");
+            } else {
+                if (tablero.get(0).getText().toString().equals("-")) {
+                    tablero.get(0).setText(signo);
+                    System.out.println("ACTIVITY IA: Coloco en esquina 0 no puedo ganar");
+                } else {
+                    if (tablero.get(6).getText().toString().equals("-")) {
+                        tablero.get(6).setText(signo);
+                        System.out.println("ACTIVITY IA: Coloco en esquina 6 no puedo ganar");
+                    } else {
+                        if (tablero.get(2).getText().toString().equals("-")) {
+                            tablero.get(2).setText(signo);
+                            System.out.println("ACTIVITY IA: Coloco en esquina 2 no puedo ganar");
+                        } else {
+                            if (tablero.get(8).getText().toString().equals("-")) {
+                                tablero.get(8).setText(signo);
+                                System.out.println("ACTIVITY IA: Coloco en esquina 8 no puedo ganar");
+                            }
+                        }
+                    }
+                }
             }
         }
 
