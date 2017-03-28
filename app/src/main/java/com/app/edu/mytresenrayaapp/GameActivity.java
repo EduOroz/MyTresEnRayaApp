@@ -86,9 +86,9 @@ public class GameActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 //Do something after 100ms
-                                signo = moveIA(signo);
+                                if(!endGame){signo = moveIA(signo);}
                             }
-                        }, 1000);
+                        }, 500);
 
 
                     } else {
@@ -124,9 +124,9 @@ public class GameActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 //Do something after 100ms
-                                signo = moveIA(signo);
+                                if(!endGame){signo = moveIA(signo);}
                             }
-                        }, 1000);
+                        }, 500);
 
 
                     } else {
@@ -162,9 +162,9 @@ public class GameActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 //Do something after 100ms
-                                signo = moveIA(signo);
+                                if(!endGame){signo = moveIA(signo);}
                             }
-                        }, 1000);
+                        }, 500);
 
 
                     } else {
@@ -199,10 +199,10 @@ public class GameActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                //Do something after 1000ms
-                                signo = moveIA(signo);
+                                //Do something after 500ms
+                                if(!endGame){signo = moveIA(signo);}
                             }
-                        }, 1000);
+                        }, 500);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -236,10 +236,10 @@ public class GameActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                //Do something after 1000ms
-                                signo = moveIA(signo);
+                                //Do something after 500ms
+                                if(!endGame){signo = moveIA(signo);}
                             }
-                        }, 1000);
+                        }, 500);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -273,10 +273,10 @@ public class GameActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                //Do something after 1000ms
-                                signo = moveIA(signo);
+                                //Do something after 500ms
+                                if(!endGame){signo = moveIA(signo);}
                             }
-                        }, 1000);
+                        }, 500);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -310,10 +310,10 @@ public class GameActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                //Do something after 1000ms
-                                signo = moveIA(signo);
+                                //Do something after 500ms
+                                if(!endGame){signo = moveIA(signo);}
                             }
-                        }, 1000);
+                        }, 500);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -347,10 +347,10 @@ public class GameActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                //Do something after 1000ms
-                                signo = moveIA(signo);
+                                //Do something after 500ms
+                                if(!endGame){signo = moveIA(signo);}
                             }
-                        }, 1000);
+                        }, 500);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -384,10 +384,10 @@ public class GameActivity extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                //Do something after 1000ms
-                                signo = moveIA(signo);
+                                //Do something after 500ms
+                                if(!endGame){signo = moveIA(signo);}
                             }
-                        }, 1000);
+                        }, 500);
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");

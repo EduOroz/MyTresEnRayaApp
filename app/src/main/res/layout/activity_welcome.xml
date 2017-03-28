@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.app.edu.mytresenrayaapp.WelcomeActivity">
+
+    <Button
+        android:id="@+id/btPlayWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jugar"
+        android:onClick="start_app"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="80dp"
+        android:textSize="30dp"/>
+
+    <ImageView
+        android:id="@+id/imagen_fondo_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/wallpaper_fullhd" />
+
+    <TextView
+        android:id="@+id/tvBienvenido1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Bienvenido"
+        android:textSize="45dp"
+        android:textColor="@color/background_color"
+        android:layout_marginBottom="50dp"/>
+
+    <TextView
+        android:id="@+id/tvBienvenido2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="0dp"
+        android:text="al 3 en Raya"
+        android:textSize="45dp"
+        android:textColor="@color/background_color"/>
+
+
+
+</FrameLayout>
