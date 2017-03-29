@@ -1,5 +1,8 @@
 package com.app.edu.mytresenrayaapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -35,6 +38,14 @@ public class GameActivity extends AppCompatActivity {
     String test ="-";
     Boolean endGame = false;
 
+    //Creamos los objetos MediaPlayer para el sonido al interactuar con los botones
+    MediaPlayer mpIA;
+    MediaPlayer mpPerson;
+
+    //Creamos los objetos SharedPreferences para recuperar la información de settings
+    SharedPreferences sp;
+    boolean sonido;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +65,17 @@ public class GameActivity extends AppCompatActivity {
         bt9 = (Button) findViewById(R.id.bt9);
         btReStart = (Button) findViewById(R.id.btReStart);
 
+        //Creamos un handler para gestionar los tiempos entre el movimiento humano y el movimiento de la ia
         final Handler handler = new Handler();
 
+        //Recuperamos las opciones de sharePreferences
+        sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
+        sonido = sp.getBoolean("sonido", false);
+
+        System.out.println("ACTIVITY GAME el nombre del jugador es: "+sp.getString("nombre",""));
+        tvMensajes.setText("¿Juegas "+sp.getString("nombre","") +" ?");
+
+        //Creamos un tablero para la gestión de movimientos de la IA
         tablero = new ArrayList<Button>() {{add(bt1); add(bt2); add(bt3);
             add(bt4); add(bt5); add(bt6);add(bt7); add(bt8); add(bt9);}};
 
@@ -399,7 +419,8 @@ public class GameActivity extends AppCompatActivity {
         btReStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvMensajes.setText("¿Juegas?");
+
+                tvMensajes.setText("¿Juegas?" );
                 bt1.setText("-");
                 bt2.setText("-");
                 bt3.setText("-");
@@ -442,6 +463,11 @@ public class GameActivity extends AppCompatActivity {
             signo = "O";
         } else signo="X";
         System.out.println("ACTIVITY JUGAR-cambiar Signo a: " +signo);
+
+        //incluimos sonido
+        mpPerson = MediaPlayer.create(getApplicationContext(), R.raw.personbutton);
+        mpPerson.start();
+
         return signo;
     }
 
@@ -615,6 +641,11 @@ public class GameActivity extends AppCompatActivity {
         } else signo="X";
 
         System.out.println("ACTIVITY JUGAR-IA: Terminando de mover la IA devuelve el signo " +signo);
+
+        //incluimos sonido
+        mpIA = MediaPlayer.create(getApplicationContext(), R.raw.iabutton);
+        mpIA.start();
+
         return signo;
     }
 

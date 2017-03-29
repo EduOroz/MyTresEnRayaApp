@@ -1,7 +1,9 @@
 package com.app.edu.mytresenrayaapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 /**
  * Created by Eduardo on 27/03/2017.
@@ -20,6 +22,10 @@ public class General {
             setActivity(c, ViewGamesActivity.class);
             return true;
         } else if (id == R.id.action_quit) {
+            SharedPreferences sp = c.getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sp.edit();
+            editor.putString("nombre", "");
+            editor.commit();
             setActivity(c, LoginActivity.class);
             return true;
         }
