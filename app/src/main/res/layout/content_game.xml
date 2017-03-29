@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:background="@drawable/my_border"
             android:elevation="1dp"
-            android:paddingTop="18dp"
+            android:paddingTop="19dp"
             android:text="Bienvenido a mis dominios"
             android:textAlignment="center"
             android:textSize="20sp" />

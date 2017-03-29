@@ -13,7 +13,7 @@ public class General {
 
     public static boolean menu (Activity c, int id) {
         if (id == R.id.action_settings) {
-            setActivity(c, SettingsActivity.class);
+            setActivity(c, ConfigActivity.class);
             return true;
         } else if (id == R.id.action_play) {
             setActivity(c, GameActivity.class);

@@ -1,5 +1,9 @@
 package com.app.edu.mytresenrayaapp;
 
+/*
+* Edu:  Esta es la activity recomendada y cogida por defecto de las actividades de Android Studio
+*       de momento no la vamos a usar y usaremos en su lugar ConfigActivity
+ */
 
 import android.annotation.TargetApi;
 import android.content.Context;

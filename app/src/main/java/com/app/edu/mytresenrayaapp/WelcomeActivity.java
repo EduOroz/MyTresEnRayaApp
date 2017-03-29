@@ -35,7 +35,6 @@ public class WelcomeActivity extends AppCompatActivity {
         SharedPreferences sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
         String name = sp.getString("nombre","");
 
-        //Paramos el sonido
         if (sonido) {
             mp.stop();
         }

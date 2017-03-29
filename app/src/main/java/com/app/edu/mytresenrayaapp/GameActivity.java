@@ -465,8 +465,10 @@ public class GameActivity extends AppCompatActivity {
         System.out.println("ACTIVITY JUGAR-cambiar Signo a: " +signo);
 
         //incluimos sonido
-        mpPerson = MediaPlayer.create(getApplicationContext(), R.raw.personbutton);
-        mpPerson.start();
+        if (sonido) {
+            mpPerson = MediaPlayer.create(getApplicationContext(), R.raw.personbutton);
+            mpPerson.start();
+        }
 
         return signo;
     }
@@ -643,8 +645,10 @@ public class GameActivity extends AppCompatActivity {
         System.out.println("ACTIVITY JUGAR-IA: Terminando de mover la IA devuelve el signo " +signo);
 
         //incluimos sonido
-        mpIA = MediaPlayer.create(getApplicationContext(), R.raw.iabutton);
-        mpIA.start();
+        if (sonido) {
+            mpIA = MediaPlayer.create(getApplicationContext(), R.raw.iabutton);
+            mpIA.start();
+        }
 
         return signo;
     }
