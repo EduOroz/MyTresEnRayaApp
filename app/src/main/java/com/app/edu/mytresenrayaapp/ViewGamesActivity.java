@@ -38,7 +38,6 @@ public class ViewGamesActivity extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();

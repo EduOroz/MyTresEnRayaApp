@@ -3,6 +3,7 @@ package com.app.edu.mytresenrayaapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -13,10 +14,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 
@@ -49,6 +62,7 @@ public class GameActivity extends AppCompatActivity {
     boolean sonido;
     boolean saveGames = false;
     String movesGame = "";
+    JSONObject job;
     String whoStarts = "";
 
     @Override
@@ -78,27 +92,34 @@ public class GameActivity extends AppCompatActivity {
         bt9 = (Button) findViewById(R.id.bt9);
         btReStart = (Button) findViewById(R.id.btReStart);
 
+        //Creamos un tablero para la gestión de movimientos de la IA
+        tablero = new ArrayList<Button>() {{add(bt1); add(bt2); add(bt3);
+            add(bt4); add(bt5); add(bt6);add(bt7); add(bt8); add(bt9);}};
+
         //Creamos un handler para gestionar los tiempos entre el movimiento humano y el movimiento de la ia
         final Handler handler = new Handler();
 
         //Recuperamos las opciones de sharePreferences
         sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-        sonido = sp.getBoolean("sonido", false);
         saveGames = sp.getBoolean("saveGames", false);
-        whoStarts = sp.getString("whoStarts", "Person");
 
+        sonido = sp.getBoolean("sonido", false);
         if (sonido) {
             mp = MediaPlayer.create(getApplicationContext(), R.raw.bienvenida);
             mp.setLooping(true);
             mp.start();
         }
 
+        //Según configuración debe empezar la IA o el Jugador
+        whoStarts = sp.getString("empieza", "Person");
+        if (whoStarts.equals("IA")){
+            signo = moveIA(signo);
+        }
+
         System.out.println("ACTIVITY GAME el nombre del jugador es: "+sp.getString("nombre",""));
         tvMensajes.setText("¿Juegas "+sp.getString("nombre","") +" ?");
 
-        //Creamos un tablero para la gestión de movimientos de la IA
-        tablero = new ArrayList<Button>() {{add(bt1); add(bt2); add(bt3);
-            add(bt4); add(bt5); add(bt6);add(bt7); add(bt8); add(bt9);}};
+
 
         //Creamos listeners para hacer click en los botones
         bt1.setOnClickListener(new View.OnClickListener() {
@@ -115,13 +136,22 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")){
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else {
                             if (comprobarEmpate()){
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (saveGames){
+                                    guardarPartida();
+                                }
                             };
                         }
                         //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
@@ -155,13 +185,22 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")) {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (saveGames){
+                                    guardarPartida();
+                                }
                             };
                         }
 
@@ -195,13 +234,22 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")) {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (saveGames){
+                                    guardarPartida();
+                                }
                             };
                         }
 
@@ -235,13 +283,22 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")) {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (saveGames){
+                                    guardarPartida();
+                                }
                             };
                         }
 
@@ -274,13 +331,22 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")){
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else {
                             if (comprobarEmpate()){
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (saveGames){
+                                    guardarPartida();
+                                }
                             };
                         }
 
@@ -313,13 +379,22 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")) {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (saveGames){
+                                    guardarPartida();
+                                }
                             };
                         }
 
@@ -352,13 +427,22 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")) {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (saveGames){
+                                    guardarPartida();
+                                }
                             };
                         }
 
@@ -391,13 +475,20 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")) {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
+                            guardarPartida();
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (saveGames){
+                                    guardarPartida();
+                                }
                             };
                         }
 
@@ -430,13 +521,22 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")) {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
+                            if (saveGames){
+                                guardarPartida();
+                            }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (saveGames){
+                                    guardarPartida();
+                                }
                             };
                         }
 
@@ -471,6 +571,10 @@ public class GameActivity extends AppCompatActivity {
                 bt8.setText("-");
                 bt9.setText("-");
                 endGame=false;
+                movesGame="";
+                if (whoStarts.equals("IA")){
+                    signo = moveIA(signo);
+                }
             }
         });
 
@@ -499,6 +603,17 @@ public class GameActivity extends AppCompatActivity {
         //Cambiamos el texto del botón y reseteamos signo
         System.out.println("ACTIVITY JUGAR-cambiar Signo de: " +signo);
         bt.setText(signo);
+
+        //guardamos el movimiento realizado
+        int posicion = -1;
+        for (int j=0; j< tablero.size(); j++){
+            if (tablero.get(j).equals(bt)) {
+                posicion = j;
+            }   
+        }
+        movesGame += signo +" en "+posicion +"| ";
+        System.out.println("ACTIVITY JUGAR: Movimientos realizados "+movesGame);
+        
         if (signo.equals("X")){
             signo = "O";
         } else signo="X";
@@ -622,7 +737,8 @@ public class GameActivity extends AppCompatActivity {
     private String moveIA(String signo){
         System.out.println("ACTIVITY JUGAR-IA: Moviendo la IA con signo " +signo);
         String signo_persona;
-        Boolean movimiento=false;
+        int posicion = -1;
+        boolean movimiento=false;
 
         if (signo.equals("X")){
             signo_persona = "O";
@@ -636,6 +752,10 @@ public class GameActivity extends AppCompatActivity {
                     tvMensajes.setText("Lo siento has perdido");
                     endGame=true;
                     movimiento=true;
+                    posicion = j;
+                    if (saveGames){
+                        guardarPartida();
+                    }
                 } else {tablero.get(j).setText("-");};
             }
         }
@@ -647,32 +767,63 @@ public class GameActivity extends AppCompatActivity {
                     if (comprobarGanador(signo_persona).equals(signo_persona)&&!movimiento){
                         tablero.get(j).setText(signo);
                         movimiento=true;
+                        posicion = j;
                         tvMensajes.setText("Lo siento te he cortado");
                     } else {tablero.get(j).setText("-");};
                 }
             }
         }
-        //Si está libre nos pondremos en la casilla central o en una esquina
+        //Si está libre nos pondremos en la casilla central o en una esquina o en el resto
+        //Pendiente de cambiar a un movimiento aleatorio con predisposicion por las esquinas o centro
         if(!movimiento){
             if (tablero.get(4).getText().toString().equals("-")){
                 tablero.get(4).setText(signo);
+                posicion = 4;
                 System.out.println("ACTIVITY IA: Coloco en el centro no puedo ganar");
             } else {
                 if (tablero.get(0).getText().toString().equals("-")) {
                     tablero.get(0).setText(signo);
+                    posicion = 0;
                     System.out.println("ACTIVITY IA: Coloco en esquina 0 no puedo ganar");
                 } else {
                     if (tablero.get(6).getText().toString().equals("-")) {
                         tablero.get(6).setText(signo);
+                        posicion = 6;
                         System.out.println("ACTIVITY IA: Coloco en esquina 6 no puedo ganar");
                     } else {
                         if (tablero.get(2).getText().toString().equals("-")) {
                             tablero.get(2).setText(signo);
+                            posicion = 2;
                             System.out.println("ACTIVITY IA: Coloco en esquina 2 no puedo ganar");
                         } else {
                             if (tablero.get(8).getText().toString().equals("-")) {
                                 tablero.get(8).setText(signo);
+                                posicion = 8;
                                 System.out.println("ACTIVITY IA: Coloco en esquina 8 no puedo ganar");
+                            } else {
+                                if (tablero.get(3).getText().toString().equals("-")) {
+                                    tablero.get(3).setText(signo);
+                                    posicion = 3;
+                                    System.out.println("ACTIVITY IA: Coloco en 3 no puedo ganar");
+                                } else {
+                                    if (tablero.get(1).getText().toString().equals("-")) {
+                                        tablero.get(1).setText(signo);
+                                        posicion = 1;
+                                        System.out.println("ACTIVITY IA: Coloco en 1 no puedo ganar");
+                                    } else {
+                                        if (tablero.get(5).getText().toString().equals("-")) {
+                                            tablero.get(5).setText(signo);
+                                            posicion = 5;
+                                            System.out.println("ACTIVITY IA: Coloco en 5 no puedo ganar");
+                                        } else {
+                                            if (tablero.get(7).getText().toString().equals("-")) {
+                                                tablero.get(7).setText(signo);
+                                                posicion = 7;
+                                                System.out.println("ACTIVITY IA: Coloco en 7 no puedo ganar");
+                                            } 
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -680,6 +831,10 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
+        //guardamos el movimiento realizado
+        movesGame += signo +" en "+posicion +"| ";
+        System.out.println("ACTIVITY JUGAR: Movimientos realizados "+movesGame);
+        
         //Cambiamos el signo para que este disponible para el jugador persona
         if (signo.equals("X")){
             signo = "O";
@@ -695,8 +850,63 @@ public class GameActivity extends AppCompatActivity {
 
         //devolvemos para que pueda mover el jugador
         IAmoving = false;
+
         return signo;
     }
 
+    public void guardarPartida(){
+        String name = sp.getString("nombre","");
+        job = new JSONObject();
+        try {
+            job.put("nombre",name);
+            job.put("movimientos", movesGame);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        System.out.println("ACTIVITY GAME: Guardando la partida " +job.toString());
+        //Creamos la conexión al servicio web y le pasa como parámetro la dirección de la página y el json
+        ComunicacionTask com = new ComunicacionTask();
+        com.execute("http://minionsdesapps.esy.es/apps/insertPartidas.php", job.toString());
+    }
 
+    private class ComunicacionTask extends AsyncTask<String, Void, String> {
+
+        //    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        @Override
+        protected String doInBackground(String... params) {
+
+            String cadenaJson="";
+            try{
+                //monta la url con la dirección y parámetro de envío
+                URL url=new URL(params[0]+"?json="+params[1]);
+                System.out.println("ACTIVITY GAME Conectando a: "+url);
+                URLConnection con=url.openConnection();
+                //recuperacion de la respuesta JSON
+                String s;
+                InputStream is=con.getInputStream();
+                //utilizamos UTF-8 para que interprete correctamente las ñ y acentos
+                BufferedReader bf=new BufferedReader(
+                        new InputStreamReader(is, Charset.forName("UTF-8")));
+                while((s=bf.readLine())!=null){
+                    cadenaJson+=s;
+                }
+
+            }
+            catch(IOException ex){
+                ex.printStackTrace();
+            }
+            return cadenaJson;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            if (result.equals("1")) {
+                System.out.println("ACTIVITY GAME Respuesta del servidor OK");
+            } else {
+                System.out.println("ACTIVITY GAME Respuesta del servidor "+result);
+            }
+        }
+
+    }
 }
