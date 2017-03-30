@@ -34,6 +34,7 @@ public class ConfigActivity extends AppCompatActivity {
     SharedPreferences sp;
 
     MediaPlayer mp;
+    boolean sonido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,13 @@ public class ConfigActivity extends AppCompatActivity {
         swSaveGames = (Switch) findViewById(R.id.swSaveGames);
 
         sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
+        sonido = sp.getBoolean("sonido", false);
 
-        if(sp.getBoolean("sonido",false)){
+        if (sonido){
+            mp = MediaPlayer.create(getApplicationContext(), R.raw.bienvenida);
+            mp.setLooping(true);
+            mp.start();
+
             swSonido.setChecked(true);
         }
 
@@ -86,6 +92,7 @@ public class ConfigActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor=sp.edit();
                     editor.putBoolean("sonido",true);
                     editor.commit();
+                    sonido = true;
                     mp = MediaPlayer.create(getApplicationContext(), R.raw.bienvenida);
                     mp.start();
                     System.out.println("ACTIVITY CONFIG: Sonido " +sp.getBoolean("sonido", false));
@@ -93,7 +100,12 @@ public class ConfigActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor=sp.edit();
                     editor.putBoolean("sonido",false);
                     editor.commit();
-                    mp.stop();
+
+                    if (sonido){
+                        mp.stop();
+                    }
+
+                    sonido = false;
                     System.out.println("ACTIVITY CONFIG: Sonido " +sp.getBoolean("sonido", false));
                 }
             }
@@ -136,4 +148,11 @@ public class ConfigActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (sonido){
+            mp.stop();
+        }
+    }
 }

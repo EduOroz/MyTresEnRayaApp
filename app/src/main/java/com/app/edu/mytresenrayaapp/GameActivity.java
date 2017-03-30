@@ -36,15 +36,28 @@ public class GameActivity extends AppCompatActivity {
     String signo = "X";
     ArrayList<Button> tablero;
     String test ="-";
-    Boolean endGame = false;
+    boolean endGame = false;
+    boolean IAmoving = false;
 
     //Creamos los objetos MediaPlayer para el sonido al interactuar con los botones
     MediaPlayer mpIA;
     MediaPlayer mpPerson;
+    MediaPlayer mp;
 
     //Creamos los objetos SharedPreferences para recuperar la información de settings
     SharedPreferences sp;
     boolean sonido;
+    boolean saveGames = false;
+    String movesGame = "";
+    String whoStarts = "";
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (sonido){
+            mp.stop();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +84,14 @@ public class GameActivity extends AppCompatActivity {
         //Recuperamos las opciones de sharePreferences
         sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
         sonido = sp.getBoolean("sonido", false);
+        saveGames = sp.getBoolean("saveGames", false);
+        whoStarts = sp.getString("whoStarts", "Person");
+
+        if (sonido) {
+            mp = MediaPlayer.create(getApplicationContext(), R.raw.bienvenida);
+            mp.setLooping(true);
+            mp.start();
+        }
 
         System.out.println("ACTIVITY GAME el nombre del jugador es: "+sp.getString("nombre",""));
         tvMensajes.setText("¿Juegas "+sp.getString("nombre","") +" ?");
@@ -85,7 +106,9 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!endGame){
                     if (bt1.getText().toString().equals("-")) {
-                        signo = cambiarSigno(bt1, signo);
+                        while (!IAmoving) {
+                            signo = cambiarSigno(bt1, signo);
+                        }
                         tvMensajes.setText("");
                         System.out.println("GANADOR: " +bt1.getText().toString());
                         test=comprobarGanador(bt1.getText().toString());
@@ -114,6 +137,7 @@ public class GameActivity extends AppCompatActivity {
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
                     }
+
                 }
             }
         });
@@ -123,7 +147,9 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!endGame) {
                     if (bt2.getText().toString().equals("-")) {
-                        signo = cambiarSigno(bt2, signo);
+                        while (!IAmoving) {
+                            signo = cambiarSigno(bt2, signo);
+                        }
                         tvMensajes.setText("");
                         test = comprobarGanador(bt2.getText().toString());
                         if (test.equals("X")) {
@@ -161,7 +187,9 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!endGame) {
                     if (bt3.getText().toString().equals("-")) {
-                        signo = cambiarSigno(bt3, signo);
+                        while (!IAmoving) {
+                            signo = cambiarSigno(bt3, signo);
+                        }
                         tvMensajes.setText("");
                         test = comprobarGanador(bt3.getText().toString());
                         if (test.equals("X")) {
@@ -199,7 +227,9 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!endGame) {
                     if (bt4.getText().toString().equals("-")) {
-                        signo = cambiarSigno(bt4, signo);
+                        while (!IAmoving) {
+                            signo = cambiarSigno(bt4, signo);
+                        }
                         tvMensajes.setText("");
                         test = comprobarGanador(bt4.getText().toString());
                         if (test.equals("X")) {
@@ -236,7 +266,9 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!endGame) {
                     if (bt5.getText().toString().equals("-")) {
-                        signo = cambiarSigno(bt5, signo);
+                        while (!IAmoving) {
+                            signo = cambiarSigno(bt5, signo);
+                        }
                         tvMensajes.setText("");
                         test=comprobarGanador(bt5.getText().toString());
                         if (test.equals("X")){
@@ -273,7 +305,9 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!endGame) {
                     if (bt6.getText().toString().equals("-")) {
-                        signo = cambiarSigno(bt6, signo);
+                        while (!IAmoving) {
+                            signo = cambiarSigno(bt6, signo);
+                        }
                         tvMensajes.setText("");
                         test = comprobarGanador(bt6.getText().toString());
                         if (test.equals("X")) {
@@ -310,7 +344,9 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!endGame) {
                     if (bt7.getText().toString().equals("-")) {
-                        signo = cambiarSigno(bt7, signo);
+                        while (!IAmoving) {
+                            signo = cambiarSigno(bt7, signo);
+                        }
                         tvMensajes.setText("");
                         test = comprobarGanador(bt7.getText().toString());
                         if (test.equals("X")) {
@@ -347,7 +383,9 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!endGame) {
                     if (bt8.getText().toString().equals("-")) {
-                        signo = cambiarSigno(bt8, signo);
+                        while (!IAmoving) {
+                            signo = cambiarSigno(bt8, signo);
+                        }
                         tvMensajes.setText("");
                         test = comprobarGanador(bt8.getText().toString());
                         if (test.equals("X")) {
@@ -384,7 +422,9 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!endGame) {
                     if (bt9.getText().toString().equals("-")) {
-                        signo = cambiarSigno(bt9, signo);
+                        while (!IAmoving) {
+                            signo = cambiarSigno(bt9, signo);
+                        }
                         tvMensajes.setText("");
                         test = comprobarGanador(bt9.getText().toString());
                         if (test.equals("X")) {
@@ -420,7 +460,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                tvMensajes.setText("¿Juegas?" );
+                tvMensajes.setText("¿Juegas otra?" );
                 bt1.setText("-");
                 bt2.setText("-");
                 bt3.setText("-");
@@ -469,6 +509,9 @@ public class GameActivity extends AppCompatActivity {
             mpPerson = MediaPlayer.create(getApplicationContext(), R.raw.personbutton);
             mpPerson.start();
         }
+
+        //Damos turno para que se mueva la IA
+        IAmoving = true;
 
         return signo;
     }
@@ -650,6 +693,8 @@ public class GameActivity extends AppCompatActivity {
             mpIA.start();
         }
 
+        //devolvemos para que pueda mover el jugador
+        IAmoving = false;
         return signo;
     }
 

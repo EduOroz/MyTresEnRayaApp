@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -46,12 +47,22 @@ public class LoginActivity extends AppCompatActivity {
     String name;
     AutoCompleteTextView actvNombre;
 
+    MediaPlayer mp;
+    boolean sonido;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
+
+        sonido = sp.getBoolean("sonido",false);
+        if (sonido) {
+            mp = MediaPlayer.create(getApplicationContext(), R.raw.bienvenida);
+            mp.start();
+        }
+
         actvNombre = (AutoCompleteTextView) findViewById(R.id.actvNombre);
         login = (Button) findViewById(R.id.sign_in_button);
 
@@ -66,6 +77,14 @@ public class LoginActivity extends AppCompatActivity {
                 General.setActivity(LoginActivity.this, GameActivity.class);
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (sonido){
+            mp.stop();
+        }
     }
 
 

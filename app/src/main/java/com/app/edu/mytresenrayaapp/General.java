@@ -12,6 +12,9 @@ import android.content.SharedPreferences;
 public class General {
 
     public static boolean menu (Activity c, int id) {
+
+        SharedPreferences sp;
+
         if (id == R.id.action_settings) {
             setActivity(c, ConfigActivity.class);
             return true;
@@ -22,11 +25,11 @@ public class General {
             setActivity(c, ViewGamesActivity.class);
             return true;
         } else if (id == R.id.action_quit) {
-            SharedPreferences sp = c.getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
+            sp = c.getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor=sp.edit();
             editor.putString("nombre", "");
             editor.commit();
-            setActivity(c, LoginActivity.class);
+            setActivity(c, WelcomeActivity.class);
             return true;
         }
 

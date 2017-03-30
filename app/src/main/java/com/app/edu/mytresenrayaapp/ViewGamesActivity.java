@@ -1,5 +1,8 @@
 package com.app.edu.mytresenrayaapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +15,10 @@ import android.widget.Button;
 
 public class ViewGamesActivity extends AppCompatActivity {
 
+    SharedPreferences sp;
+
+    MediaPlayer mp;
+    boolean sonido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +27,25 @@ public class ViewGamesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
+        sonido = sp.getBoolean("sonido", false);
+
+        if (sonido){
+            mp = MediaPlayer.create(getApplicationContext(), R.raw.bienvenida);
+            mp.setLooping(true);
+            mp.start();
+        }
+
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (sonido){
+            mp.stop();
+        }
+    }
     //Sobreescribimos estas 2 funciones para la navegación en el menu hamburguesa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
