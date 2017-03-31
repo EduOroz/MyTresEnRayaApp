@@ -51,11 +51,15 @@ public class GameActivity extends AppCompatActivity {
     String test ="-";
     boolean endGame = false;
     boolean IAmoving = false;
-
+    
+    String ganador;
+    String name;
+    
     //Creamos los objetos MediaPlayer para el sonido al interactuar con los botones
     MediaPlayer mpIA;
     MediaPlayer mpPerson;
     MediaPlayer mp;
+    MediaPlayer mpAux;
 
     //Creamos los objetos SharedPreferences para recuperar la información de settings
     SharedPreferences sp;
@@ -102,11 +106,13 @@ public class GameActivity extends AppCompatActivity {
         //Recuperamos las opciones de sharePreferences
         sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
         saveGames = sp.getBoolean("saveGames", false);
-
+        name = sp.getString("nombre","");
+        
         sonido = sp.getBoolean("sonido", false);
         if (sonido) {
             mp = MediaPlayer.create(getApplicationContext(), R.raw.bienvenida);
             mp.setLooping(true);
+            mp.setVolume(0.2f,0.2f);
             mp.start();
         }
 
@@ -117,7 +123,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         System.out.println("ACTIVITY GAME el nombre del jugador es: "+sp.getString("nombre",""));
-        tvMensajes.setText("¿Juegas "+sp.getString("nombre","") +" ?");
+        tvMensajes.setText("¿Juegas "+name +" ?");
 
 
 
@@ -136,21 +142,36 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")){
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
+                            if (sonido) {
+                                mpAux = MediaPlayer.create(getApplicationContext(), R.raw.chripei_victory);
+                                mpAux.start();
+                            }
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
+                            if (sonido) {
+                                mpAux = MediaPlayer.create(getApplicationContext(), R.raw.chripei_victory);
+                                mpAux.start();
+                            }
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else {
                             if (comprobarEmpate()){
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (sonido) {
+                                    mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                                    mpAux.start();
+                                }
                                 if (saveGames){
-                                    guardarPartida();
+                                    ganador = "Empate";
+                                    guardarPartida(ganador);
                                 }
                             };
                         }
@@ -186,20 +207,27 @@ public class GameActivity extends AppCompatActivity {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (sonido) {
+                                    mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                                    mpAux.start();
+                                }
                                 if (saveGames){
-                                    guardarPartida();
+                                    ganador = "Empate";
+                                    guardarPartida(ganador);
                                 }
                             };
                         }
@@ -235,20 +263,27 @@ public class GameActivity extends AppCompatActivity {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (sonido) {
+                                    mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                                    mpAux.start();
+                                }
                                 if (saveGames){
-                                    guardarPartida();
+                                    ganador = "Empate";
+                                    guardarPartida(ganador);
                                 }
                             };
                         }
@@ -284,20 +319,27 @@ public class GameActivity extends AppCompatActivity {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (sonido) {
+                                    mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                                    mpAux.start();
+                                }
                                 if (saveGames){
-                                    guardarPartida();
+                                    ganador = "Empate";
+                                    guardarPartida(ganador);
                                 }
                             };
                         }
@@ -332,20 +374,27 @@ public class GameActivity extends AppCompatActivity {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else {
                             if (comprobarEmpate()){
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (sonido) {
+                                    mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                                    mpAux.start();
+                                }
                                 if (saveGames){
-                                    guardarPartida();
+                                    ganador = "Empate";
+                                    guardarPartida(ganador);
                                 }
                             };
                         }
@@ -380,20 +429,27 @@ public class GameActivity extends AppCompatActivity {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (sonido) {
+                                    mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                                    mpAux.start();
+                                }
                                 if (saveGames){
-                                    guardarPartida();
+                                    ganador = "Empate";
+                                    guardarPartida(ganador);
                                 }
                             };
                         }
@@ -428,20 +484,27 @@ public class GameActivity extends AppCompatActivity {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (sonido) {
+                                    mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                                    mpAux.start();
+                                }
                                 if (saveGames){
-                                    guardarPartida();
+                                    ganador = "Empate";
+                                    guardarPartida(ganador);
                                 }
                             };
                         }
@@ -475,19 +538,28 @@ public class GameActivity extends AppCompatActivity {
                         if (test.equals("X")) {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
-                            guardarPartida();
+                            if (saveGames){
+                                ganador = name;
+                                guardarPartida(ganador);
+                            }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (sonido) {
+                                    mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                                    mpAux.start();
+                                }
                                 if (saveGames){
-                                    guardarPartida();
+                                    ganador = "Empate";
+                                    guardarPartida(ganador);
                                 }
                             };
                         }
@@ -522,20 +594,27 @@ public class GameActivity extends AppCompatActivity {
                             tvMensajes.setText("Enhorabuena ganan las X");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else if (test.equals("O")) {
                             tvMensajes.setText("Enhorabuena ganan las O");
                             endGame = true;
                             if (saveGames){
-                                guardarPartida();
+                                ganador = name;
+                                guardarPartida(ganador);
                             }
                         } else {
                             if (comprobarEmpate()) {
                                 tvMensajes.setText("La partida termina en empate");
                                 endGame = true;
+                                if (sonido) {
+                                    mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                                    mpAux.start();
+                                }
                                 if (saveGames){
-                                    guardarPartida();
+                                    ganador = "Empate";
+                                    guardarPartida(ganador);
                                 }
                             };
                         }
@@ -560,7 +639,7 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                tvMensajes.setText("¿Juegas otra?" );
+                tvMensajes.setText("¿Te atreves con otra?" );
                 bt1.setText("-");
                 bt2.setText("-");
                 bt3.setText("-");
@@ -750,11 +829,16 @@ public class GameActivity extends AppCompatActivity {
                 tablero.get(j).setText(signo);
                 if (comprobarGanador(signo).equals(signo)&&!movimiento){
                     tvMensajes.setText("Lo siento has perdido");
+                    if (sonido) {
+                        mpAux = MediaPlayer.create(getApplicationContext(), R.raw.jivatma_gameover);
+                        mpAux.start();
+                    }
                     endGame=true;
                     movimiento=true;
                     posicion = j;
                     if (saveGames){
-                        guardarPartida();
+                        ganador = "IA";
+                        guardarPartida(ganador);
                     }
                 } else {tablero.get(j).setText("-");};
             }
@@ -768,7 +852,11 @@ public class GameActivity extends AppCompatActivity {
                         tablero.get(j).setText(signo);
                         movimiento=true;
                         posicion = j;
-                        tvMensajes.setText("Lo siento te he cortado");
+                        tvMensajes.setText("Uy casi lo consigues :P");
+                        if (sonido) {
+                            mpAux = MediaPlayer.create(getApplicationContext(), R.raw.noirenex_cortado);
+                            mpAux.start();
+                        }
                     } else {tablero.get(j).setText("-");};
                 }
             }
@@ -779,46 +867,55 @@ public class GameActivity extends AppCompatActivity {
             if (tablero.get(4).getText().toString().equals("-")){
                 tablero.get(4).setText(signo);
                 posicion = 4;
+                fraseIA();
                 System.out.println("ACTIVITY IA: Coloco en el centro no puedo ganar");
             } else {
                 if (tablero.get(0).getText().toString().equals("-")) {
                     tablero.get(0).setText(signo);
                     posicion = 0;
+                    fraseIA();
                     System.out.println("ACTIVITY IA: Coloco en esquina 0 no puedo ganar");
                 } else {
                     if (tablero.get(6).getText().toString().equals("-")) {
                         tablero.get(6).setText(signo);
                         posicion = 6;
+                        fraseIA();
                         System.out.println("ACTIVITY IA: Coloco en esquina 6 no puedo ganar");
                     } else {
                         if (tablero.get(2).getText().toString().equals("-")) {
                             tablero.get(2).setText(signo);
                             posicion = 2;
+                            fraseIA();
                             System.out.println("ACTIVITY IA: Coloco en esquina 2 no puedo ganar");
                         } else {
                             if (tablero.get(8).getText().toString().equals("-")) {
                                 tablero.get(8).setText(signo);
                                 posicion = 8;
+                                fraseIA();
                                 System.out.println("ACTIVITY IA: Coloco en esquina 8 no puedo ganar");
                             } else {
                                 if (tablero.get(3).getText().toString().equals("-")) {
                                     tablero.get(3).setText(signo);
                                     posicion = 3;
+                                    fraseIA();
                                     System.out.println("ACTIVITY IA: Coloco en 3 no puedo ganar");
                                 } else {
                                     if (tablero.get(1).getText().toString().equals("-")) {
                                         tablero.get(1).setText(signo);
                                         posicion = 1;
+                                        fraseIA();
                                         System.out.println("ACTIVITY IA: Coloco en 1 no puedo ganar");
                                     } else {
                                         if (tablero.get(5).getText().toString().equals("-")) {
                                             tablero.get(5).setText(signo);
                                             posicion = 5;
+                                            fraseIA();
                                             System.out.println("ACTIVITY IA: Coloco en 5 no puedo ganar");
                                         } else {
                                             if (tablero.get(7).getText().toString().equals("-")) {
                                                 tablero.get(7).setText(signo);
                                                 posicion = 7;
+                                                fraseIA();
                                                 System.out.println("ACTIVITY IA: Coloco en 7 no puedo ganar");
                                             } 
                                         }
@@ -830,6 +927,20 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         }
+
+        if (comprobarEmpate()){
+            tvMensajes.setText("La partida termina en empate");
+            endGame = true;
+            if (sonido) {
+                mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                mpAux.start();
+            }
+            if (saveGames){
+                ganador = "Empate";
+                guardarPartida(ganador);
+            }
+        };
+
 
         //guardamos el movimiento realizado
         movesGame += signo +" en "+posicion +"| ";
@@ -854,12 +965,35 @@ public class GameActivity extends AppCompatActivity {
         return signo;
     }
 
-    public void guardarPartida(){
-        String name = sp.getString("nombre","");
+    public void fraseIA(){
+        //Creamos frases para que la IA mande mensajes tras realizar un movimiento no ganador ni importante
+        ArrayList<String> frases = new ArrayList<>();
+        int aleatorio=0;
+
+        frases.add("¿Estas seguro?");
+        frases.add("Así no vas a ganar");
+        frases.add("Uyuyuyuyyuy");
+        frases.add("Peleas como una vaca");
+        frases.add("¡Luchas como un granjero!");
+        frases.add("Yo soy cola, tú pegamento");
+        frases.add("No sé que hacer con eso");
+        frases.add("Sigue así para perder");
+        frases.add("¿Te explico las reglas?");
+
+
+        aleatorio = (int) (Math.random() *frases.size());
+
+        tvMensajes.setText(frases.get(aleatorio));
+
+    }
+
+    public void guardarPartida(String ganador){
+        name = sp.getString("nombre","");
         job = new JSONObject();
         try {
             job.put("nombre",name);
             job.put("movimientos", movesGame);
+            job.put("ganador", ganador);
         } catch (JSONException e) {
             e.printStackTrace();
         }

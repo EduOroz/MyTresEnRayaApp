@@ -125,7 +125,7 @@ public class ViewGamesActivity extends AppCompatActivity {
                 for(int i=0;i<jarray.length();i++){
                     JSONObject job=jarray.getJSONObject(i);
                     System.out.println("ACTIVITY VIEW GAMES Fila Recibida: "+job.toString());
-                    json_list.add(job.getString("id")+". " +job.getString("nombre") +"   > " +job.getString("movimientos"));
+                    json_list.add(job.getString("id")+". " +job.getString("nombre") +"   > " +job.getString("movimientos") +"   - win by: " +job.getString("ganador"));
                 }
 
             }
@@ -133,7 +133,7 @@ public class ViewGamesActivity extends AppCompatActivity {
                 ex.printStackTrace();
             }
 
-            System.out.println("ACTIVITY VIEW GAMES Primer elemento json_list: " +json_list.get(0));
+            //System.out.println("ACTIVITY VIEW GAMES Primer elemento json_list: " +json_list.get(0));
             ArrayAdapter<String> adapter= new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, json_list);
             lvViewPartidas.setAdapter(adapter);
             //tvSalida.setText(""+result);
