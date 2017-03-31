@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#3ba743</color>
+    <color name="colorPrimaryDark">#29863a</color>
+    <color name="colorPrimaryOriginal">#3F51B5</color>
+    <color name="colorPrimaryDarkOriginal">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="background_color">#ffffff</color>
     <color name="border_color">#000000</color>
+    <color name="black">#000000</color>
+    <color name="division_line">#666666</color>
 </resources>
