@@ -11,12 +11,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +55,7 @@ public class GameActivity extends AppCompatActivity {
     String test ="-";
     boolean endGame = false;
     boolean IAmoving = false;
+    ToggleButton tbModoJuego;
     
     String ganador;
     String name;
@@ -65,16 +70,24 @@ public class GameActivity extends AppCompatActivity {
     SharedPreferences sp;
     boolean sonido;
     boolean saveGames = false;
+    String modoJuego;
     String movesGame = "";
     JSONObject job;
     String whoStarts = "";
 
+    //Función para mostrar textos emergentes
+    private void mostrarTexto(String texto){
+        Toast aviso = Toast.makeText(this, texto, Toast.LENGTH_SHORT);
+        aviso.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+        aviso.show();
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
-        if (sonido){
+        /*if (sonido){
             mp.stop();
-        }
+        }*/
     }
 
     @Override
@@ -95,6 +108,8 @@ public class GameActivity extends AppCompatActivity {
         bt8 = (Button) findViewById(R.id.bt8);
         bt9 = (Button) findViewById(R.id.bt9);
         btReStart = (Button) findViewById(R.id.btReStart);
+        ToggleButton tbModoJuego = (ToggleButton) findViewById(R.id.tbModoJuego);
+
 
         //Creamos un tablero para la gestión de movimientos de la IA
         tablero = new ArrayList<Button>() {{add(bt1); add(bt2); add(bt3);
@@ -107,19 +122,32 @@ public class GameActivity extends AppCompatActivity {
         sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
         saveGames = sp.getBoolean("saveGames", false);
         name = sp.getString("nombre","");
+
+        modoJuego = sp.getString("modoJuego", "vsIA");
+        System.out.println("ACTIVITY GAME - El modo de juego es: " +modoJuego);
+        if(modoJuego.equals("vsIA")){
+            tbModoJuego.setChecked(true);
+            mostrarTexto("Activado el modo de juego contra la IA más lista del mundo ;)");
+        } else {
+            tbModoJuego.setChecked(false);
+            mostrarTexto("Activado el modo de juego jugador contra jugador");
+        }
+
         
         sonido = sp.getBoolean("sonido", false);
-        if (sonido) {
+        /*if (sonido) {
             mp = MediaPlayer.create(getApplicationContext(), R.raw.bienvenida);
             mp.setLooping(true);
             mp.setVolume(0.2f,0.2f);
             mp.start();
-        }
+        }*/
 
         //Según configuración debe empezar la IA o el Jugador
         whoStarts = sp.getString("empieza", "Person");
-        if (whoStarts.equals("IA")){
-            signo = moveIA(signo);
+        if(modoJuego.equals("vsIA")){
+            if (whoStarts.equals("IA")){
+                signo = moveIA(signo);
+            }
         }
 
         System.out.println("ACTIVITY GAME el nombre del jugador es: "+sp.getString("nombre",""));
@@ -175,14 +203,18 @@ public class GameActivity extends AppCompatActivity {
                                 }
                             };
                         }
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 100ms
-                                if(!endGame){signo = moveIA(signo);}
-                            }
-                        }, 500);
+                        if (modoJuego.equals("vsIA")) {
+                            //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 100ms
+                                    if (!endGame) {
+                                        signo = moveIA(signo);
+                                    }
+                                }
+                            }, 500);
+                        } else IAmoving=false;
 
 
                     } else {
@@ -232,14 +264,18 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 100ms
-                                if(!endGame){signo = moveIA(signo);}
-                            }
-                        }, 500);
+                        if (modoJuego.equals("vsIA")) {
+                            //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 100ms
+                                    if (!endGame) {
+                                        signo = moveIA(signo);
+                                    }
+                                }
+                            }, 500);
+                        } else IAmoving=false;
 
 
                     } else {
@@ -288,14 +324,18 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 100ms
-                                if(!endGame){signo = moveIA(signo);}
-                            }
-                        }, 500);
+                        if (modoJuego.equals("vsIA")) {
+                            //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 100ms
+                                    if (!endGame) {
+                                        signo = moveIA(signo);
+                                    }
+                                }
+                            }, 500);
+                        } else IAmoving=false;
 
 
                     } else {
@@ -344,14 +384,18 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 500ms
-                                if(!endGame){signo = moveIA(signo);}
-                            }
-                        }, 500);
+                        if (modoJuego.equals("vsIA")) {
+                            //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 100ms
+                                    if (!endGame) {
+                                        signo = moveIA(signo);
+                                    }
+                                }
+                            }, 500);
+                        } else IAmoving=false;
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -399,14 +443,18 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 500ms
-                                if(!endGame){signo = moveIA(signo);}
-                            }
-                        }, 500);
+                        if (modoJuego.equals("vsIA")) {
+                            //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 100ms
+                                    if (!endGame) {
+                                        signo = moveIA(signo);
+                                    }
+                                }
+                            }, 500);
+                        } else IAmoving=false;
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -454,14 +502,18 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 500ms
-                                if(!endGame){signo = moveIA(signo);}
-                            }
-                        }, 500);
+                        if (modoJuego.equals("vsIA")) {
+                            //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 100ms
+                                    if (!endGame) {
+                                        signo = moveIA(signo);
+                                    }
+                                }
+                            }, 500);
+                        } else IAmoving=false;
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -509,14 +561,18 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 500ms
-                                if(!endGame){signo = moveIA(signo);}
-                            }
-                        }, 500);
+                        if (modoJuego.equals("vsIA")) {
+                            //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 100ms
+                                    if (!endGame) {
+                                        signo = moveIA(signo);
+                                    }
+                                }
+                            }, 500);
+                        } else IAmoving=false;
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -564,14 +620,18 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 500ms
-                                if(!endGame){signo = moveIA(signo);}
-                            }
-                        }, 500);
+                        if (modoJuego.equals("vsIA")) {
+                            //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 100ms
+                                    if (!endGame) {
+                                        signo = moveIA(signo);
+                                    }
+                                }
+                            }, 500);
+                        } else IAmoving=false;
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -619,14 +679,18 @@ public class GameActivity extends AppCompatActivity {
                             };
                         }
 
-                        //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Do something after 500ms
-                                if(!endGame){signo = moveIA(signo);}
-                            }
-                        }, 500);
+                        if (modoJuego.equals("vsIA")) {
+                            //Después de mover el jugador y comprobar si el juego termina, mueve la IA tras 1 segundo
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Do something after 100ms
+                                    if (!endGame) {
+                                        signo = moveIA(signo);
+                                    }
+                                }
+                            }, 500);
+                        } else IAmoving=false;
 
                     } else {
                         tvMensajes.setText("Esa casilla ya esta usada");
@@ -639,7 +703,9 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                tvMensajes.setText("¿Te atreves con otra?" );
+                if (modoJuego.equals("vsIA")) {
+                    tvMensajes.setText("¿Te atreves con otra?");
+                } else {tvMensajes.setText("Player vs Player");}
                 bt1.setText("-");
                 bt2.setText("-");
                 bt3.setText("-");
@@ -654,6 +720,24 @@ public class GameActivity extends AppCompatActivity {
                 if (whoStarts.equals("IA")){
                     signo = moveIA(signo);
                 }
+            }
+        });
+
+        tbModoJuego.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor=sp.edit();
+                if (isChecked) {
+                    modoJuego="vsIA";
+                    mostrarTexto("Activado el modo de juego jugador contra la IA");
+                } else {
+                    modoJuego="vsHumano";
+                    mostrarTexto("Activado el modo de juego jugador contra jugador");
+                }
+                editor.putString("modoJuego",modoJuego);
+                editor.commit();
+                btReStart.callOnClick();
+
             }
         });
 
@@ -979,6 +1063,9 @@ public class GameActivity extends AppCompatActivity {
         frases.add("No sé que hacer con eso");
         frases.add("Sigue así para perder");
         frases.add("¿Te explico las reglas?");
+        frases.add("Tuve un perro mas listo q tu");
+        frases.add("Luchas como un ganadero!");
+        frases.add("Es tu hora palurdo de 8 patas");
 
 
         aleatorio = (int) (Math.random() *frases.size());
