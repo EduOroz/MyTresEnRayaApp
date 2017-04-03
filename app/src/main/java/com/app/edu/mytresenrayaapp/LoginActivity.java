@@ -34,6 +34,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,11 +71,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 name = actvNombre.getText().toString();
-                System.out.println("ACTIVITY LOGIN nombre escrito: " +name);
-                SharedPreferences.Editor editor=sp.edit();
-                editor.putString("nombre", name);
-                editor.commit();
-                General.setActivity(LoginActivity.this, GameActivity.class);
+                if (!name.equals("")) {
+                    System.out.println("ACTIVITY LOGIN nombre escrito: " + name);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("nombre", name);
+                    editor.commit();
+                    General.setActivity(LoginActivity.this, GameActivity.class);
+                } else {
+                    Toast.makeText(getBaseContext(), "Debes introducir un nombre para continuar", Toast.LENGTH_LONG).show();}
             }
         });
     }

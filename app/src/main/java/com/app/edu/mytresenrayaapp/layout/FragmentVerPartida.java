@@ -47,11 +47,11 @@ public class FragmentVerPartida extends Fragment {
     Button bt8ViewGames;
     Button bt9ViewGames;
     Button btCloseViewGame;
+
+    //Para gestionar la async task de pintar la partida
     static String[] movimientos;
-    int contador;
     static int posicion;
     static String signo;
-    boolean done = true;
     static ArrayList<Button> tablero;
 
     View myView = null;
@@ -132,8 +132,7 @@ public class FragmentVerPartida extends Fragment {
         return myView;
     }
 
-    //Utilizado para actualizar la interfaz gráfica
-    // de la actividad principal
+    //Utilizado para actualizar la interfaz gráfica de la actividad principal
     public static Handler manejador = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -142,6 +141,7 @@ public class FragmentVerPartida extends Fragment {
             int what = msg.what;
             int contador = msg.arg1;
 
+            System.out.println("ACTIVITY FRAGMENT Ver contador: " +contador);
             if (contador<movimientos.length) {
                 System.out.println("ACTIVITY FRAGMENT Ver movimientos: " + movimientos[contador]);
                 //Restamos 48 al convertir a entero por la diferencia de 48 posiciones en la tabla ASCII
@@ -151,7 +151,7 @@ public class FragmentVerPartida extends Fragment {
                 System.out.println("ACTIVITY FRAGMENT Ver signo: " + signo);
 
                 //Actualizamos el tablero
-                System.out.println("ACTIVITY FRAGMENT actualiza el tablero posicion " + posicion + "signo " + signo);
+                System.out.println("ACTIVITY FRAGMENT actualiza el tablero posicion " + posicion + " signo " + signo);
                 tablero.get(posicion).setText(signo);
             }
         }

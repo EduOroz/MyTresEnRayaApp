@@ -28,13 +28,13 @@ public class ServicioAnimacion extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "destruyendo servicio", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Destruyendo servicio", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         System.out.println("ACTIVITY Servicio Animación Arrancando");
-        Toast.makeText(this, "se ha iniciado el servicio", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "se ha iniciado el servicio", Toast.LENGTH_LONG).show();
         new CalculoTask().execute(new Void[]{null});
         return Service.START_STICKY;
     }
@@ -50,7 +50,7 @@ public class ServicioAnimacion extends Service {
             for (int contador=0; contador<9; contador++){
 
                 try {
-                    Thread.sleep(200);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -62,16 +62,16 @@ public class ServicioAnimacion extends Service {
 
         @Override
         protected void onPostExecute(Long result) {
-            Toast.makeText(getBaseContext(), "calculo finalizado "+	result, Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Partida finalizada ", Toast.LENGTH_LONG).show();
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            System.out.println(values[0]+" % calculado");
+            System.out.println("Movimiento " +values[0]);
             //enviamos un mensaje al Handler con el porcentaje
             //de calculo realizado. Se lo pasamos en el segundo
             //parámetro
-            FragmentVerPartida.manejador.obtainMessage(0, values[0]).sendToTarget();
+            FragmentVerPartida.manejador.obtainMessage(0, values[0], 9).sendToTarget();
         }
 
     }

@@ -78,7 +78,7 @@ public class GameActivity extends AppCompatActivity {
     //Función para mostrar textos emergentes
     private void mostrarTexto(String texto){
         Toast aviso = Toast.makeText(this, texto, Toast.LENGTH_SHORT);
-        aviso.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 450);
+        aviso.setGravity(Gravity.CENTER_HORIZONTAL, 0, 50);
         aviso.show();
     }
 
@@ -108,7 +108,7 @@ public class GameActivity extends AppCompatActivity {
         bt8 = (Button) findViewById(R.id.bt8);
         bt9 = (Button) findViewById(R.id.bt9);
         btReStart = (Button) findViewById(R.id.btReStart);
-        ToggleButton tbModoJuego = (ToggleButton) findViewById(R.id.tbModoJuego);
+        tbModoJuego = (ToggleButton) findViewById(R.id.tbModoJuego);
 
 
         //Creamos un tablero para la gestión de movimientos de la IA

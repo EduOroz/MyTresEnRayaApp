@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyTresEnRayaApp</string>
+    <string name="app_name">Tres en Raya</string>
     <string name="action_settings">Configuración</string>
     <string name="action_play">Jugar</string>
     <string name="action_view_games">Partidas Jugadas</string>
@@ -17,7 +17,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_game">Tres en Raya by Edu</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -91,8 +91,8 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="title_activity_view_games">ViewGamesActivity</string>
-    <string name="title_activity_config">ConfigActivity</string>
+    <string name="title_activity_view_games">Ver Partidas Jugadas</string>
+    <string name="title_activity_config">Configuración</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
