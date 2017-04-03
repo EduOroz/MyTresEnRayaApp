@@ -1,0 +1,147 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:orientation="vertical"
+    android:layout_marginTop="80dp"
+    android:background="@color/background_color"
+    tools:context="com.app.edu.mytresenrayaapp.layout.FragmentVerPartida">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/bt1ViewGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_green"
+                    android:elevation="0dp"
+                    android:text="-"
+                    android:textColor="#ffffff"
+                    android:textSize="42sp" />
+
+                <Button
+                    android:id="@+id/bt2ViewGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_green"
+                    android:text="-"
+                    android:textColor="#ffffff"
+                    android:textSize="42sp" />
+
+                <Button
+                    android:id="@+id/bt3ViewGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_green"
+                    android:text="-"
+                    android:textColor="#ffffff"
+                    android:textSize="42sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/bt4ViewGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_green"
+                    android:text="-"
+                    android:textColor="#ffffff"
+                    android:textSize="42sp" />
+
+                <Button
+                    android:id="@+id/bt5ViewGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_green"
+                    android:text="-"
+                    android:textColor="#ffffff"
+                    android:textSize="42sp" />
+
+                <Button
+                    android:id="@+id/bt6ViewGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_green"
+                    android:text="-"
+                    android:textColor="#ffffff"
+                    android:textSize="42sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/bt7ViewGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_green"
+                    android:text="-"
+                    android:textColor="#ffffff"
+                    android:textSize="42sp" />
+
+                <Button
+                    android:id="@+id/bt8ViewGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_green"
+                    android:text="-"
+                    android:textColor="#ffffff"
+                    android:textSize="42sp" />
+
+                <Button
+                    android:id="@+id/bt9ViewGames"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_green"
+                    android:text="-"
+                    android:textColor="#ffffff"
+                    android:textSize="42sp" />
+            </TableRow>
+
+        </TableLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btCloseViewGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="CloseViewGame"
+            android:layout_marginLeft="130dp"
+            android:text="Cerrar" />
+    </LinearLayout>
+
+</LinearLayout>

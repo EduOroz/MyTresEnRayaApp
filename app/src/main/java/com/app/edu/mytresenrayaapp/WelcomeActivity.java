@@ -31,6 +31,12 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
     public void start_app(View vi){
         SharedPreferences sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
         String name = sp.getString("nombre","");

@@ -78,7 +78,7 @@ public class GameActivity extends AppCompatActivity {
     //Función para mostrar textos emergentes
     private void mostrarTexto(String texto){
         Toast aviso = Toast.makeText(this, texto, Toast.LENGTH_SHORT);
-        aviso.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+        aviso.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 350);
         aviso.show();
     }
 
@@ -704,7 +704,9 @@ public class GameActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (modoJuego.equals("vsIA")) {
-                    tvMensajes.setText("¿Te atreves con otra?");
+                    if (bt4.getText().equals("-")){
+                        tvMensajes.setText("¿Podras ganarme?");
+                    } else tvMensajes.setText("¿Te atreves con otra?");
                 } else {tvMensajes.setText("Player vs Player");}
                 bt1.setText("-");
                 bt2.setText("-");

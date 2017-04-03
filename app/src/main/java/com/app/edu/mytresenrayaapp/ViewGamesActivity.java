@@ -1,20 +1,23 @@
 package com.app.edu.mytresenrayaapp;
 
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.app.edu.mytresenrayaapp.layout.FragmentVerPartida;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +31,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ViewGamesActivity extends AppCompatActivity {
 
@@ -36,6 +38,9 @@ public class ViewGamesActivity extends AppCompatActivity {
 
     MediaPlayer mp;
     boolean sonido;
+
+    //FragmentManager manager;
+    FragmentVerPartida fragVerpartida;
 
     ListView lvViewPartidas;
 
@@ -60,6 +65,24 @@ public class ViewGamesActivity extends AppCompatActivity {
         //iniciar la comunicación con el servidor remoto para obtener las partidas jugadas
         ComunicacionTask com = new ComunicacionTask();
         com.execute("http://minionsdesapps.esy.es/apps/verPartidas.php");
+
+        //Creamos un listener para cuando hagamos click en una partida nos abra un fragment
+        lvViewPartidas.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent,
+                                            View view, int position, long id) {
+                        Toast.makeText(ViewGamesActivity.this,
+                                "Partida " +position,
+                                Toast.LENGTH_SHORT).show();
+
+                        //Abrimos el Fragment creado
+                        System.out.println("ACTIVITY VALL - Item señalado: " +lvViewPartidas.getItemAtPosition(position).toString());
+                        FragmentManager manager = getSupportFragmentManager();
+                        fragVerpartida = FragmentVerPartida.newInstance(lvViewPartidas.getItemAtPosition(position).toString(), "fragVerpartida");
+                        manager.beginTransaction().replace(R.id.activity_view_games, fragVerpartida).addToBackStack(null).commit();
+                    }
+                });
     }
 
     @Override
@@ -125,7 +148,11 @@ public class ViewGamesActivity extends AppCompatActivity {
                 for(int i=0;i<jarray.length();i++){
                     JSONObject job=jarray.getJSONObject(i);
                     System.out.println("ACTIVITY VIEW GAMES Fila Recibida: "+job.toString());
-                    json_list.add(job.getString("id")+". " +job.getString("nombre") +"   > " +job.getString("movimientos") +"   - win by: " +job.getString("ganador"));
+                    if (job.get("ganador").equals("Empate")){
+                        json_list.add(job.getString("id")+". " +job.getString("nombre") +"   > " +job.getString("movimientos") +"   > " +job.getString("ganador"));
+                    } else {
+                        json_list.add(job.getString("id")+". " +job.getString("nombre") +"   > " +job.getString("movimientos") +"   > win by: " +job.getString("ganador"));
+                    }
                 }
 
             }
