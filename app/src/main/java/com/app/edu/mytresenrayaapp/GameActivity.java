@@ -78,7 +78,7 @@ public class GameActivity extends AppCompatActivity {
     //Función para mostrar textos emergentes
     private void mostrarTexto(String texto){
         Toast aviso = Toast.makeText(this, texto, Toast.LENGTH_SHORT);
-        aviso.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 350);
+        aviso.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 450);
         aviso.show();
     }
 

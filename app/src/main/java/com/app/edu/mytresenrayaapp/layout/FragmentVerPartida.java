@@ -1,20 +1,18 @@
 package com.app.edu.mytresenrayaapp.layout;
 
-import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.app.edu.mytresenrayaapp.General;
 import com.app.edu.mytresenrayaapp.R;
-import com.app.edu.mytresenrayaapp.ViewGamesActivity;
+import com.app.edu.mytresenrayaapp.servicios.ServicioAnimacion;
 
 import java.util.ArrayList;
 
@@ -27,7 +25,7 @@ import java.util.ArrayList;
  * Use the {@link FragmentVerPartida#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentVerPartida extends Fragment implements View.OnClickListener {
+public class FragmentVerPartida extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,12 +47,12 @@ public class FragmentVerPartida extends Fragment implements View.OnClickListener
     Button bt8ViewGames;
     Button bt9ViewGames;
     Button btCloseViewGame;
-    String[] movimientos;
+    static String[] movimientos;
     int contador;
-    int posicion;
-    String signo;
+    static int posicion;
+    static String signo;
     boolean done = true;
-    ArrayList<Button> tablero;
+    static ArrayList<Button> tablero;
 
     View myView = null;
 
@@ -97,14 +95,9 @@ public class FragmentVerPartida extends Fragment implements View.OnClickListener
         movimientos = parametros[1].split("\\|");
         System.out.println("ACTIVITY FRAGMENT parametro 1 " +movimientos[0]);
 
+        //Arrancamos el servicio
+        getActivity().startService(new Intent(getActivity(), ServicioAnimacion.class));
 
-        /*final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }, 1000);*/
     }
 
     @Override
@@ -139,28 +132,31 @@ public class FragmentVerPartida extends Fragment implements View.OnClickListener
         return myView;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    //Utilizado para actualizar la interfaz gráfica
+    // de la actividad principal
+    public static Handler manejador = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            //el valor del segundo parámetro es recogido
+            //mediante el atributo arg1
+            int what = msg.what;
+            int contador = msg.arg1;
 
-        for (contador=0;contador<=(movimientos.length-1);contador++){
+            if (contador<movimientos.length) {
+                System.out.println("ACTIVITY FRAGMENT Ver movimientos: " + movimientos[contador]);
+                //Restamos 48 al convertir a entero por la diferencia de 48 posiciones en la tabla ASCII
+                posicion = movimientos[contador].charAt(1) - 48;
+                signo = Character.toString(movimientos[contador].charAt(0));
+                System.out.println("ACTIVITY FRAGMENT Ver posicion: " + posicion);
+                System.out.println("ACTIVITY FRAGMENT Ver signo: " + signo);
 
-            System.out.println("ACTIVITY FRAGMENT Ver movimientos: " + movimientos[contador]);
-            //Restamos 48 al convertir a entero por la diferencia de 48 posiciones en la tabla ASCII
-            posicion = movimientos[contador].charAt(1) - 48;
-            signo = Character.toString(movimientos[contador].charAt(0));
-            System.out.println("ACTIVITY FRAGMENT Ver posicion: " + posicion);
-            System.out.println("ACTIVITY FRAGMENT Ver signo: " + signo);
-            try {
+                //Actualizamos el tablero
+                System.out.println("ACTIVITY FRAGMENT actualiza el tablero posicion " + posicion + "signo " + signo);
                 tablero.get(posicion).setText(signo);
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
-
         }
+    };
 
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -184,11 +180,6 @@ public class FragmentVerPartida extends Fragment implements View.OnClickListener
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onClick(View v) {
-
     }
 
     /**

@@ -4,13 +4,19 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.app.edu.mytresenrayaapp.layout.FragmentVerPartida;
+
+import java.util.ArrayList;
+
 /**
- * Created by telefonica on 29/03/2017.
+ * Created by Edu on 03/04/2017.
  */
 
 public class ServicioAnimacion extends Service {
+
     public ServicioAnimacion() {
     }
 
@@ -27,6 +33,7 @@ public class ServicioAnimacion extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        System.out.println("ACTIVITY Servicio Animación Arrancando");
         Toast.makeText(this, "se ha iniciado el servicio", Toast.LENGTH_LONG).show();
         new CalculoTask().execute(new Void[]{null});
         return Service.START_STICKY;
@@ -35,21 +42,21 @@ public class ServicioAnimacion extends Service {
     private class CalculoTask extends AsyncTask<Void,Integer,Long> {
         @Override
         protected Long doInBackground(Void... arg0) {
-            //simula una tarea de larga duración en donde
-            //se tarda mucho en realizar la suma de los números
-            //de 1 a 100
+
+            int posicion;
+            String signo;
             long result = 0;
-            for (int i = 1; i <= 100; i++) {
-                result += i;
+
+            for (int contador=0; contador<9; contador++){
+
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(200);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //con cada suma, se hace la llamada a este método
-                //que provocará la ejecución de onProgressUpdate
-                publishProgress(i);
+                publishProgress(contador);
             }
+
             return result;
         }
 
@@ -64,7 +71,7 @@ public class ServicioAnimacion extends Service {
             //enviamos un mensaje al Handler con el porcentaje
             //de calculo realizado. Se lo pasamos en el segundo
             //parámetro
-            //MainActivity.manejador.obtainMessage(0,values[0],1,new Clase(values[0])).sendToTarget();
+            FragmentVerPartida.manejador.obtainMessage(0, values[0]).sendToTarget();
         }
 
     }
