@@ -62,7 +62,8 @@ public class ServicioAnimacion extends Service {
 
         @Override
         protected void onPostExecute(Long result) {
-            Toast.makeText(getBaseContext(), "Partida finalizada ", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getBaseContext(), "Partida finalizada ", Toast.LENGTH_LONG).show();
+            FragmentVerPartida.manejador.obtainMessage(1).sendToTarget();
         }
 
         @Override

@@ -922,10 +922,6 @@ public class GameActivity extends AppCompatActivity {
                     endGame=true;
                     movimiento=true;
                     posicion = j;
-                    if (saveGames){
-                        ganador = "IA";
-                        guardarPartida(ganador);
-                    }
                 } else {tablero.get(j).setText("-");};
             }
         }
@@ -1014,24 +1010,32 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
-        if (comprobarEmpate()){
-            tvMensajes.setText("La partida termina en empate");
-            endGame = true;
-            if (sonido) {
-                mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
-                mpAux.start();
-            }
-            if (saveGames){
-                ganador = "Empate";
-                guardarPartida(ganador);
-            }
-        };
-
 
         //guardamos el movimiento realizado
         movesGame += signo +" en "+posicion +"| ";
         System.out.println("ACTIVITY JUGAR: Movimientos realizados "+movesGame);
-        
+
+        //Si endGame es true significa ha ganado la IA y guardamos la partida, si no revisamos si hay empate
+        if (endGame==true) {
+            if (saveGames) {
+                ganador = "IA";
+                guardarPartida(ganador);
+            }
+        } else {
+            if (comprobarEmpate()) {
+                tvMensajes.setText("La partida termina en empate");
+                endGame = true;
+                if (sonido) {
+                    mpAux = MediaPlayer.create(getApplicationContext(), R.raw.benboncan_empate);
+                    mpAux.start();
+                }
+                if (saveGames) {
+                    ganador = "Empate";
+                    guardarPartida(ganador);
+                }
+            }
+        }
+
         //Cambiamos el signo para que este disponible para el jugador persona
         if (signo.equals("X")){
             signo = "O";

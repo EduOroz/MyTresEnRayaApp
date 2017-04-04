@@ -1,5 +1,6 @@
 package com.app.edu.mytresenrayaapp.layout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.app.edu.mytresenrayaapp.R;
 import com.app.edu.mytresenrayaapp.servicios.ServicioAnimacion;
@@ -35,6 +37,9 @@ public class FragmentVerPartida extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    //Guardamos el contexto para poder utilizarlo en el handler que es static
+    private static Context context;
+
     private OnFragmentInteractionListener mListener;
 
     Button bt1ViewGames;
@@ -53,6 +58,8 @@ public class FragmentVerPartida extends Fragment {
     static int posicion;
     static String signo;
     static ArrayList<Button> tablero;
+    String[] array_ganador;
+    static String ganador;
 
     View myView = null;
 
@@ -83,6 +90,8 @@ public class FragmentVerPartida extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        context = this.getContext();
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -90,6 +99,17 @@ public class FragmentVerPartida extends Fragment {
         System.out.println("ACTIVITY FRAGMENT: Estamos en OnCreate");
         System.out.println("ACTIVITY FRAGMENT parametro entrada: " +mParam1.toString());
 
+        //Primero averiguamos el ganador, tendremos que revisar si ha terminado en empate o no
+        array_ganador = mParam1.split(">");
+        System.out.println("ACTIVITY FRAGMENT ganador partida: " +array_ganador[2]);
+        if(array_ganador[2].equals(" Empate")){
+            ganador = "Empate";
+        } else {
+            array_ganador = mParam1.split(":");
+            ganador = array_ganador[1];
+        }
+
+        //Después buscaremos los movimientos de la partida para animarlos
         String[] parametros = mParam1.replace(" ","").replace("en","").split(">");
         System.out.println("ACTIVITY FRAGMENT parametro 1 " +parametros[1]);
         movimientos = parametros[1].split("\\|");
@@ -141,18 +161,24 @@ public class FragmentVerPartida extends Fragment {
             int what = msg.what;
             int contador = msg.arg1;
 
-            System.out.println("ACTIVITY FRAGMENT Ver contador: " +contador);
-            if (contador<movimientos.length) {
-                System.out.println("ACTIVITY FRAGMENT Ver movimientos: " + movimientos[contador]);
-                //Restamos 48 al convertir a entero por la diferencia de 48 posiciones en la tabla ASCII
-                posicion = movimientos[contador].charAt(1) - 48;
-                signo = Character.toString(movimientos[contador].charAt(0));
-                System.out.println("ACTIVITY FRAGMENT Ver posicion: " + posicion);
-                System.out.println("ACTIVITY FRAGMENT Ver signo: " + signo);
+            if (what ==0) {
+                System.out.println("ACTIVITY FRAGMENT Ver contador: " + contador);
+                if (contador < movimientos.length) {
+                    System.out.println("ACTIVITY FRAGMENT Ver movimientos: " + movimientos[contador]);
+                    //Restamos 48 al convertir a entero por la diferencia de 48 posiciones en la tabla ASCII
+                    posicion = movimientos[contador].charAt(1) - 48;
+                    signo = Character.toString(movimientos[contador].charAt(0));
+                    System.out.println("ACTIVITY FRAGMENT Ver posicion: " + posicion);
+                    System.out.println("ACTIVITY FRAGMENT Ver signo: " + signo);
 
-                //Actualizamos el tablero
-                System.out.println("ACTIVITY FRAGMENT actualiza el tablero posicion " + posicion + " signo " + signo);
-                tablero.get(posicion).setText(signo);
+                    //Actualizamos el tablero
+                    System.out.println("ACTIVITY FRAGMENT actualiza el tablero posicion " + posicion + " signo " + signo);
+                    tablero.get(posicion).setText(signo);
+                }
+            } else if (what == 1){
+                if (ganador.equals("Empate")){
+                    Toast.makeText(context, "Partida terminada en empate", Toast.LENGTH_LONG).show();
+                } else Toast.makeText(context, "Ganador " +ganador, Toast.LENGTH_LONG).show();
             }
         }
     };
