@@ -7,13 +7,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MotionEventCompat;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.app.edu.mytresenrayaapp.R;
+import com.app.edu.mytresenrayaapp.ViewGamesActivity;
 import com.app.edu.mytresenrayaapp.servicios.ServicioAnimacion;
 
 import java.util.ArrayList;
@@ -61,6 +65,7 @@ public class FragmentVerPartida extends Fragment {
     String[] array_ganador;
     static String ganador;
 
+    Intent servicio;
     View myView = null;
 
 
@@ -116,7 +121,8 @@ public class FragmentVerPartida extends Fragment {
         System.out.println("ACTIVITY FRAGMENT parametro 1 " +movimientos[0]);
 
         //Arrancamos el servicio
-        getActivity().startService(new Intent(getActivity(), ServicioAnimacion.class));
+        servicio = new Intent(getActivity(), ServicioAnimacion.class);
+        getActivity().startService(servicio);
 
     }
 
@@ -144,11 +150,30 @@ public class FragmentVerPartida extends Fragment {
         btCloseViewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getActivity().stopService(servicio);
                 getFragmentManager().popBackStack();
 
             }
         });
 
+        //Creamos un listener para controlar que cuando toquen el área del fragment la ventana esté bloqueada y no puedan interactuar
+        myView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    System.out.println("ACTIVITY FRAGMENT Capturando Action Down");
+                    //getFragmentManager().popBackStack();
+                }
+                if(event.getAction() == MotionEvent.ACTION_MOVE){
+                    System.out.println("ACTIVITY FRAGMENT Capturando Action Move");
+                    //getFragmentManager().popBackStack();
+                }
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    System.out.println("ACTIVITY FRAGMENT Capturando Action Up");
+                }
+                return true;
+            }
+        });
         return myView;
     }
 
@@ -177,12 +202,20 @@ public class FragmentVerPartida extends Fragment {
                 }
             } else if (what == 1){
                 if (ganador.equals("Empate")){
-                    Toast.makeText(context, "Partida terminada en empate", Toast.LENGTH_LONG).show();
-                } else Toast.makeText(context, "Ganador " +ganador, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "Partida terminada en empate", Toast.LENGTH_LONG).show();
+                    mostrarTexto("Partida terminada en empate");
+                } else //Toast.makeText(context, "Ganador " +ganador, Toast.LENGTH_LONG).show();
+                    mostrarTexto("Ganador " +ganador);
             }
         }
     };
 
+    //Función para mostrar textos emergentes
+    private static void mostrarTexto(String texto){
+        Toast aviso = Toast.makeText(context, texto, Toast.LENGTH_SHORT);
+        aviso.setGravity(Gravity.CENTER_HORIZONTAL, 0, 450);
+        aviso.show();
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

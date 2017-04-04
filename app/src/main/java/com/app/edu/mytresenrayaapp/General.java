@@ -29,6 +29,7 @@ public class General {
             SharedPreferences.Editor editor=sp.edit();
             editor.putString("nombre", "");
             editor.commit();
+            c.finish();
             setActivity(c, WelcomeActivity.class);
             return true;
         }

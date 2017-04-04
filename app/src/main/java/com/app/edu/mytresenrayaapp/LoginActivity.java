@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("nombre", name);
                     editor.commit();
                     General.setActivity(LoginActivity.this, GameActivity.class);
+                    LoginActivity.this.finish();
                 } else {
                     Toast.makeText(getBaseContext(), "Debes introducir un nombre para continuar", Toast.LENGTH_LONG).show();}
             }

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -72,9 +73,10 @@ public class ViewGamesActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent,
                                             View view, int position, long id) {
-                        Toast.makeText(ViewGamesActivity.this,
-                                "Partida " +position,
-                                Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ViewGamesActivity.this, "Partida " +position, Toast.LENGTH_SHORT).show();
+                        Toast aviso = Toast.makeText(ViewGamesActivity.this, "Partida " +position, Toast.LENGTH_SHORT);
+                        aviso.setGravity(Gravity.CENTER_HORIZONTAL, 0, 450);
+                        aviso.show();
 
                         //Abrimos el Fragment creado
                         System.out.println("ACTIVITY VALL - Item señalado: " +lvViewPartidas.getItemAtPosition(position).toString());

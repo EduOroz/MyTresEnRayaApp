@@ -28,7 +28,7 @@ public class ServicioAnimacion extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "Destruyendo servicio", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Destruyendo servicio", Toast.LENGTH_LONG).show();
     }
 
     @Override
