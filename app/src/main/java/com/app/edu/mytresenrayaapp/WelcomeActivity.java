@@ -51,8 +51,8 @@ public class WelcomeActivity extends AppCompatActivity {
                         // un listener que al pulsar, cierre la aplicacion
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            // Salir
-                            WelcomeActivity.this.finish();
+                            // Finish the current activity and all parent activities
+                            finishAffinity();
                         }
                     })
                     .show();
