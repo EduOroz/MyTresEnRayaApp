@@ -65,6 +65,7 @@ public class FragmentVerPartida extends Fragment {
     String[] array_ganador;
     static String ganador;
 
+    static boolean serviceRunning;
     Intent servicio;
     View myView = null;
 
@@ -123,6 +124,7 @@ public class FragmentVerPartida extends Fragment {
         //Arrancamos el servicio
         servicio = new Intent(getActivity(), ServicioAnimacion.class);
         getActivity().startService(servicio);
+        serviceRunning= true;
 
     }
 
@@ -150,6 +152,7 @@ public class FragmentVerPartida extends Fragment {
         btCloseViewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                serviceRunning = false;
                 getActivity().stopService(servicio);
                 getFragmentManager().popBackStack();
 
@@ -201,11 +204,13 @@ public class FragmentVerPartida extends Fragment {
                     tablero.get(posicion).setText(signo);
                 }
             } else if (what == 1){
-                if (ganador.equals("Empate")){
-                    //Toast.makeText(context, "Partida terminada en empate", Toast.LENGTH_LONG).show();
-                    mostrarTexto("Partida terminada en empate");
-                } else //Toast.makeText(context, "Ganador " +ganador, Toast.LENGTH_LONG).show();
-                    mostrarTexto("Ganador " +ganador);
+                if (serviceRunning) {
+                    if (ganador.equals("Empate")) {
+                        //Toast.makeText(context, "Partida terminada en empate", Toast.LENGTH_LONG).show();
+                        mostrarTexto("Partida terminada en empate");
+                    } else //Toast.makeText(context, "Ganador " +ganador, Toast.LENGTH_LONG).show();
+                        mostrarTexto("Ganador " + ganador);
+                }
             }
         }
     };
