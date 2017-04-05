@@ -129,6 +129,14 @@ public class FragmentVerPartida extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        serviceRunning = false;
+        getActivity().stopService(servicio);
+        System.out.println("ACTIVITY FRAGMENT: Estamos en OnPause");
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
