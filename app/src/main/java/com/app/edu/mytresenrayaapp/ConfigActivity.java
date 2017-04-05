@@ -50,7 +50,7 @@ public class ConfigActivity extends AppCompatActivity {
         swSaveGames = (Switch) findViewById(R.id.swSaveGames);
 
         sp = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
-        sonido = sp.getBoolean("sonido", false);
+        sonido = sp.getBoolean("sonido", true);
 
         if (sonido){
             mp = MediaPlayer.create(getApplicationContext(), R.raw.bienvenida);
